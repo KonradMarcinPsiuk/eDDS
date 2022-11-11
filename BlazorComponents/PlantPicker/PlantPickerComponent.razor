@@ -1,0 +1,18 @@
+﻿
+    <div class="m-2 placeholder-glow">
+        <label for="plantSelect" class="form-label">Plant:</label>
+        <select disabled="@_disabled" class="form-select @Placeholder" id="plantSelect" value="@SelectedPlantHandler"  @onchange="SetPlant">
+        @if (_disabled)
+        {
+            <option value="" disabled selected hidden>Loading ...</option>
+        }
+        else
+        {
+            @foreach (var p in Plants)
+            {
+                <option @key="p.Id" value="@p.Id">@p.PlantName</option>
+            }
+        }
+        </select>
+    </div>
+

@@ -1,0 +1,50 @@
+﻿@page "/defectlist"
+
+<div>
+    <button class="btn btn-primary" @onclick="LogNewDefect">Log new defect</button>
+    <select class="form-control" @onchange="OpenSelectionChanged">
+        <option selected value="open">Show open</option>
+        <option value="closed">Show closed</option>
+    </select>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Line area:</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Sub type:</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Priority:</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Open date</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Description</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Action</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Owner</th>
+        <th style="min-width: 150px; max-width: 300px;" scope="col">Close date</th>
+        <th style="min-width: 100px; max-width: 100px;" scope="col">Edit</th>
+        <th style="min-width: 100px; max-width: 100px;" scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var d in FilteredDefects)
+    {
+        <tr>
+
+            <td>@d.LineArea.AreaName</td>
+            <td>@d.SubTypeDescription</td>
+            <td>@d.PriorityDescription</td>
+            <td>@d.OpenDate.ToString("d")</td>
+            <td>@d.Description</td>
+            <td>@d.Action</td>
+            <td>@d.Owner?.FullName</td>
+            <td>@d.CloseDate?.ToString("d")</td>
+            <td>
+                <button class="btn btn-primary" @onclick="() => EditDefect(d.Id)">Edit</button>
+            </td>
+
+            <td>
+                <DeleteButton OnClick="async () => {if (await DeleteCheck()){await DefectService.DeleteDefect(d.Id);Defects.Remove(d);}}"></DeleteButton>
+            </td>
+
+
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Http">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.5\Microsoft.Extensions.Http.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+
+      <ProjectReference Include="..\..\Defects.Queries\Defects.Queries.csproj" />
+
+      <ProjectReference Include="..\..\Defects.Queries\Defects.Queries.csproj" />
+
+      <ProjectReference Include="..\ClientNames\ClientNames.csproj" />
+      <ProjectReference Include="..\DTOs\DTOs.csproj" />
+    </ItemGroup>
+
+</Project>

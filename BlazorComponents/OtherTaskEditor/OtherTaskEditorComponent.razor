@@ -1,0 +1,49 @@
+﻿@using Blazored.Modal.Services
+@inherits EditorBase
+
+@if (EditedTask != null)
+{
+    <EditForm Model="EditedTask" OnValidSubmit="SaveTask">
+        <div class="mb-3">
+            <label class="form-label">Other Task editor</label>
+        </div>
+        <div>
+            <LineAreaPicker.LineAreaPickerComponent @ref="LinePicker" CanBeEmpty=true SelectedLine="SelectedLine" SelectedLineArea="SelectedLineArea" OnLineAreaSelected="SetLineArea"></LineAreaPicker.LineAreaPickerComponent>
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Description</label>
+            <br>
+            <InputTextArea class="form-control" id="desc" @bind-Value="@EditedTask.Description"></InputTextArea>
+        </div>
+        <div class="mb-3">
+            <label for="act" class="form-label">Action</label>
+            <br>
+            <InputTextArea class="form-control" id="act" @bind-Value="@EditedTask.Action"></InputTextArea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="prior">Priority:</label>
+            <InputSelect id="prior" @bind-Value="EditedTask.Priority" class="form-select min-size">
+                @foreach (var p in EditedTask.Priorities)
+                {
+                    <option value="@p.Key">@p.Value</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="stat">Status:</label>
+            <InputSelect id="stat" @bind-Value="EditedTask.Status" class="form-select min-size">
+                @foreach (var s in EditedTask.Statuses)
+                {
+                    <option value="@s.Key">@s.Value</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="mb-3">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <button type="submit" class="btn btn-success">Save</button>
+            <button type="button" class="btn btn-warning" @onclick="CancelMethod">Cancel</button>
+        </div>
+    </EditForm>
+}

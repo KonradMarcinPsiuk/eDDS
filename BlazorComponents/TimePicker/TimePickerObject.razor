@@ -1,0 +1,7 @@
+﻿<select class="form-select" value="@SelectedTime" @onchange="TimeSelected">
+    <option value="">---</option>
+    @foreach (var t in TimeOptions)
+    {
+    <option value="@t">@t.ToString("t")</option>
+    }
+</select>

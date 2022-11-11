@@ -1,0 +1,32 @@
+﻿<h2>Defect Picker</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Action</th>
+        <th scope="col">Area</th>
+        <th scope="col">Author</th>
+        <th scope="col">Select</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var def in Defects)
+    {
+        <tr>
+          
+            <td>@def.Description</td>
+            <td>@def.Action</td>
+            <td>@def.LineArea.AreaName</td>
+           
+                <td> @if (def.Owner != null)
+                     {@def.Owner.FullName}</td>
+            <td><button class="btn btn-primary" @onclick="()=>SelectDefect(def.Id)">Select</button></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="mb-2">
+    <button class="btn btn-warning" @onclick="@CancelMethod">Cancel</button>
+</div>

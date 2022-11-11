@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+
+
+
+        <ProjectReference Include="..\BlazorComponents\AllLevelPicker\AllLevelPicker.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\DailyPlanEditor\DailyPlanEditor.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\DailyTriggerQuestionEditor\DailyTriggerQuestionEditor.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\DatePicker\DatePicker.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\DefectEditor\DefectEditor.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\DepartmentPicker\DepartmentPicker.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\LineAreaPicker\LineAreaPicker.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\PlantPicker\PlantPicker.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\ProductionLinePicker\ProductionLinePicker.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\SafetyZoneQuestionEditor\SafetyZoneQuestionEditor.csproj" />
+
+        <ProjectReference Include="..\BlazorComponents\ValueStreamPicker\ValueStreamPicker.csproj" />
+
+        <ProjectReference Include="..\GenericHelpersLibrary\GenericHelpersLibrary.csproj" />
+      
+        <ProjectReference Include="..\Services\DailyPlanService\DailyPlanService.csproj" />
+        <ProjectReference Include="..\Services\DailyResultsService\DailyResultsService.csproj" />
+      
+        <ProjectReference Include="..\Services\DailyTriggerService\DailyTriggerService.csproj" />
+     
+        <ProjectReference Include="..\Services\DefectService\DefectService.csproj" />
+      
+        <ProjectReference Include="..\Services\DepartmentService\DepartmentService.csproj" />
+       
+        <ProjectReference Include="..\Services\LineAreaService\LineAreaService.csproj" />
+     
+     
+        <ProjectReference Include="..\Services\PlantService\PlantService.csproj" />
+    
+        <ProjectReference Include="..\Services\ProductionLineService\ProductionLineService.csproj" />
+      
+        <ProjectReference Include="..\Services\DailyResultsService\DailyResultsService.csproj" />
+
+        <ProjectReference Include="..\Services\ValueStreamService\ValueStreamService.csproj" />
+        <ProjectReference Include="..\Services\ZoneTriggerService\ZoneTriggerService.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+        <PackageReference Include="GenericHelpersLibrary" Version="1.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\lib\" />
+        <Folder Include="wwwroot\Resources\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Update="wwwroot\Resources\mapaex logo.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+</Project>

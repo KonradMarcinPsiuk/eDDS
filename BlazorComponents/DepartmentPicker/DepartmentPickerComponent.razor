@@ -1,0 +1,20 @@
+﻿    <div class="m-2 placeholder-glow">
+        <label for="deptSelect" class="form-label">Department:</label>
+        <select class="form-select @_placeholder" value="@SelectedDepartmentHandler" @onchange="SetDepartment" id="deptSelect">
+        @if (Disabled)
+        {
+            <option value="" disabled selected hidden>Loading ...</option>
+        }
+        else
+        {
+            @if (CanBeEmpty)
+            {
+                <option value="">---</option>
+            }
+            @foreach (var d in Departments)
+            {
+                <option value="@d.Id">@d.DepartmentName</option>
+            }
+        }
+        </select>
+    </div>

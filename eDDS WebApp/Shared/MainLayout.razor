@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>eDDS.WebTool</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main>
+        <div class="top-row">
+            <div class="container text-end">
+                <div class="row align-items-end">
+                    <div class="col">
+
+                        <button class="btn btn-primary m-3" @onclick="OpenDateSelectModal">@DateNavigation.SelectedDate</button>
+
+
+                        <button class="btn btn-primary m-3" @onclick="OpenLevelSelectModal">@SelectedLevel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <article class="content px-4">
+            @Body
+        </article>
+
+
+    </main>
+</div>

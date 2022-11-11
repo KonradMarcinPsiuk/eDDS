@@ -1,0 +1,21 @@
+﻿
+    <div class="m-2 placeholder-glow">
+        <label for="vsSelect" class="form-label">Value Stream:</label>
+        <select disabled="@Disabled" class="form-select @Placeholder"  value="@SelectedValueStreamHandler" @onchange="SetValueStream" id="vsSelect">
+            @if (Disabled)
+            {
+                <option value="" disabled selected hidden>Loading ...</option>
+            }
+            else
+            {
+                @if (CanBeEmpty)
+                {
+                    <option value="">---</option>
+                }
+                @foreach (var v in ValueStreams)
+                {
+                    <option value="@v.Id">@v.ValueStreamName</option>
+                }
+            }
+        </select>
+    </div>

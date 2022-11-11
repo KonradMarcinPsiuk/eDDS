@@ -1,0 +1,94 @@
+﻿@using eDDS.WebTool.Scoped
+@inject IsBusyScoped IsBusyScoped
+
+<div class="top-row ps-3 navbar bg-light">
+    <div class="container-fluid">
+        <div class="container text-center position-absolute ">
+            <div class="row">
+                <div class="col">
+                    <img src="Resources/mapaex logo.png" class="pict"/>
+                </div>
+                <div class="col">
+                    <a class="navbar-brand" href="">eDDS Web Tool</a>
+                </div>
+            </div>
+        </div>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" style="min-width:220px" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3 linebutton">
+            <NavLink class="nav-link" style="text-overflow: ellipsis" href="/dailytrigger" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-card-checklist m-1"></i>Daily Trigger
+            </NavLink>
+        </div>
+        <div class="nav-item px-3 linebutton">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/dailyresults" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-clipboard-data m-1"></i>Daily Results
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/dailytriggerdepartmentview" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-calendar-check m-1"></i>Daily Trigger (dept)
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/dailyresultsdepartmentview" Match="NavLinkMatch.Prefix">
+               <i class="bi bi-pie-chart-fill m-1"></i>Daily Results (dept)
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/safetyzonetrigger" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-cone-striped m-1"></i>Safety Zone Trigger
+            </NavLink>
+        </div>
+           <div class="nav-item px-3">
+                            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/qualityzonetrigger" Match="NavLinkMatch.Prefix">
+                              <i class="bi bi-bag-check m-1"></i>Quality Zone Trigger
+                            </NavLink>
+                        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/dailyplanner" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-diagram-3 m-1"></i>Daily Planner
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/defectlist" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-tools m-1"></i> Defect List
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/dailytasks" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-list-task m-1"></i> Daily tasks
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/dailytriggermanager" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-bezier2 m-1"></i> Daily Trigger Manager
+            </NavLink>
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link"  style="text-overflow: ellipsis" href="/zonetriggermanager" Match="NavLinkMatch.Prefix">
+                <i class="bi bi-bezier2 m-1"></i> Zone Trigger Manager
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}

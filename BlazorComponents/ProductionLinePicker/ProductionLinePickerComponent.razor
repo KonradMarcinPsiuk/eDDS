@@ -1,0 +1,20 @@
+﻿<div class="m-2 placeholder-glow">
+        <label for="lineSelect" class="form-label">Production Line:</label>
+    <select disabled="@_disabled" class="form-select @_placeholder" value="@SelectedProductionLineHandler" @onchange="SetProductionLine" id="lineSelect">
+        @if (_disabled)
+        {
+            <option value="" disabled selected hidden>Loading ...</option>
+        }
+        else
+        {
+            if (CanBeEmpty)
+            {
+                <option value="" selected>---</option>
+            }
+            foreach (var l in ProductionLines)
+            {
+                <option value="@l.Id">@l.LineName</option>
+            }
+        }
+    </select>
+    </div>

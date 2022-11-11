@@ -1,0 +1,79 @@
+﻿@page "/dailytrigger"
+
+@if (IsBusyScoped.IsBusy)
+{
+    <div class="lds-dual-ring"></div>
+}
+else
+{
+@if (LevelNavigation.SelectedProductionLine != null)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="min-width: 150px; max-width: 300px;" scope="col">Question</th>
+            <th scope="col">Day</th>
+            <th scope="col">Evening</th>
+            <th scope="col">Night</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var a in _answers)
+        {
+            <tr class="@a.FieldDescription">
+                <td style="min-width: 150px; max-width: 300px;">
+                    @a.QuestionText
+                </td>
+                @if (a.QuestionType is 1 or 2)
+                {
+                    <td>
+                        <select class="form-select @CheckAnswerClass.CheckAnswer(a.AnswerIntDay, a.TargetInt, a.QuestionType)" value="@a.AnswerIntDay" @onchange="async x => { if (int.TryParse(x.Value.ToString(), out var v)){ a.AnswerIntDay = v; await SaveAnswers();}}">
+                            @foreach (var o in a.Targets)
+                            {
+                                <option value="@o.Key">@o.Value</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select @CheckAnswerClass.CheckAnswer(a.AnswerIntEve, a.TargetInt, a.QuestionType)" value="@a.AnswerIntEve" @onchange="async x => { if (int.TryParse(x.Value.ToString(), out var v)){ a.AnswerIntEve = v; await SaveAnswers();}}">
+                            @foreach (var o in a.Targets)
+                            {
+                                <option value="@o.Key">@o.Value</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select @CheckAnswerClass.CheckAnswer(a.AnswerIntNight, a.TargetInt, a.QuestionType)" value="@a.AnswerIntNight" @onchange="async x => { if (int.TryParse(x.Value.ToString(), out var v)){ a.AnswerIntNight = v; await SaveAnswers();}}">
+                            @foreach (var o in a.Targets)
+                            {
+                                <option value="@o.Key">@o.Value</option>
+                            }
+                        </select>
+                    </td>
+                }
+                @if (a.QuestionType is 3)
+                {
+                    <td>
+                        <input class="form-control" value="@a.AnswerTextDay" @onchange="async x => {a.AnswerTextDay = x.Value.ToString(); await SaveAnswers(); }"/>
+                    </td>
+                    <td>
+                        <input class="form-control" value="@a.AnswerTextEve" @onchange="async x => {a.AnswerTextEve = x.Value.ToString(); await SaveAnswers(); }">
+                    </td>
+                    <td>
+                        <input class="form-control" value="@a.AnswerTextNight" @onchange="async x => {a.AnswerTextNight = x.Value.ToString(); await SaveAnswers(); }">
+                    </td>
+                }
+
+
+
+
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2 style="font-style: italic">Select production line and date</h2>
+}
+}

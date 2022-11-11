@@ -1,0 +1,68 @@
+﻿@page "/dailytriggerdepartmentview"
+
+
+@if (LevelNavigationObject.SelectedDepartment != null)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width:40%;" scope="col">Question</th>
+            <th style="width:20%;" scope="col">Day</th>
+            <th style="width:20%;" scope="col">Evening</th>
+            <th style="width:20%;" scope="col">Night</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var l in _lines)
+        {
+            <tr>
+                <td colspan="4" class="linebackground">
+                    <h5 class="h5"> @l.LineName</h5>
+                </td>
+            </tr>
+            @foreach (var a in _answers.Where(x => x.ProductionLineId == l.Id))
+            {
+                <tr>
+
+                    <td class="@a.FieldDescription">
+
+                        @a.QuestionText
+
+                    </td>
+                    @if (a.QuestionType is 1 or 2)
+                    {
+                        <td class="@CheckAnswerClass.CheckAnswer(a.AnswerIntDay, a.TargetInt, a.QuestionType)">
+                            @GetAnswer(a.AnswerIntDay, a.Targets)
+                        </td>
+                        <td class="@CheckAnswerClass.CheckAnswer(a.AnswerIntEve, a.TargetInt, a.QuestionType)">
+                            @GetAnswer(a.AnswerIntEve, a.Targets)
+                        </td>
+                        <td class="@CheckAnswerClass.CheckAnswer(a.AnswerIntNight, a.TargetInt, a.QuestionType)">
+                            @GetAnswer(a.AnswerIntNight, a.Targets)
+                        </td>
+                    }
+
+                    @if (a.QuestionType == 3)
+                    {
+                        <td style="background: #ffffff">
+                            @a.AnswerTextDay
+                        </td>
+                        <td style="background: #ffffff">
+                            @a.AnswerTextEve
+                        </td>
+                        <td style="background: #ffffff">
+                            @a.AnswerTextNight
+                        </td>
+                    }
+
+
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>Select department and date</h2>
+}

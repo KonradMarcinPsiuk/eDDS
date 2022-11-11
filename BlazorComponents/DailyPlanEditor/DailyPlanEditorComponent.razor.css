@@ -1,0 +1,24 @@
+﻿.big-checkbox {
+    display: block;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30px;
+}
+
+.big-checkbox:checked {
+    background-color: green;
+    border-color: green;
+}
+
+.big-checkbox:focus {
+    border-color: green;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+    outline: 0;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}

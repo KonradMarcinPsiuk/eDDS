@@ -1,0 +1,24 @@
+﻿<div>
+    @if (LabelVisible)
+    {
+        <label  for="pplSelect" class="form-label">Owner:</label>
+    }
+    <select class="form-select @_placeholder dropWidth" value="@SelectedPersonHandler" @onchange="SetPerson" id="pplSelect">
+        @if (Disabled)
+        {
+            <option value="" disabled selected hidden>Loading ...</option>
+        }
+        else
+        {
+            @if (CanBeEmpty)
+            {
+                <option value="">---</option>
+            }
+            @foreach (var p in People)
+            {
+                <option value="@p.Id">@p.FullName</option>
+            }
+        }
+    </select>
+</div>
+

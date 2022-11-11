@@ -1,0 +1,27 @@
+﻿<div class="m-2 placeholder-glow">
+    <label for="lineSelect" class="form-label">Line area:</label>
+    <div class="input-group mb-3">
+        @if (CanBeEmpty)
+        {
+            <button class="btn btn-outline-secondary" type="button" id="button-addon1" @onclick="Reset">Reset</button>
+        }
+        <select disabled="@Disabled"class="form-select @_placeholder" value="@SelectedLineAreaHandler" @onchange="SetLineArea" id="lineSelect">
+
+            @if (Disabled)
+            {
+                <option value="" disabled selected hidden>Loading ...</option>
+            }
+            else
+            {
+                @if (CanBeEmpty)
+                {
+                    <option value="">---</option>
+                }
+                @foreach (var l in LineAreas)
+                {
+                    <option value="@l.Id">@l.AreaName</option>
+                }
+            }
+        </select>
+    </div>
+</div>

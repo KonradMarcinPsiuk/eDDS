@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="JsonHelpers" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\DailyResults.Queries\DailyResults.Queries.csproj" />
+		<ProjectReference Include="..\..\JsonHelpers\JsonHelpers.csproj" />
+	
+	
+		<ProjectReference Include="..\ClientNames\ClientNames.csproj" />
+		<ProjectReference Include="..\DTOs\DTOs.csproj" />
+	</ItemGroup>
+</Project>

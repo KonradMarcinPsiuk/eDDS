@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DailyTrigger.Queries\DailyTrigger.Queries.csproj" />
+    <ProjectReference Include="..\..\DailyTrigger.Queries\DailyTrigger.Queries.csproj" />
+    <ProjectReference Include="..\ClientNames\ClientNames.csproj" />
+    <ProjectReference Include="..\DTOs\DTOs.csproj" />
+  </ItemGroup>
+
+</Project>

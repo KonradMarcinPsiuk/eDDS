@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@if (EditedQuestion != null)
+{
+    <EditForm Model="EditedQuestion" OnValidSubmit="SaveEdit">
+        <div class="mb-3">
+        <label class="form-label">Question</label>
+        <InputText class="form-control" @bind-Value="EditedQuestion.Question"></InputText>
+        </div>
+        
+<!--
+<div class="mb-3">
+    <label class="form-label">Hint</label>
+    <InputText class="form-control" @bind-Value="EditedQuestion.Hint"></InputText>
+</div>
+        
+        -->
+<div class="mb-3">
+        <label class="form-label">Type</label>
+        <InputSelect class="form-select" @bind-Value="EditedQuestion.Type">
+            @foreach (var t in EditedQuestion.Types)
+            {
+                <option value="@t.Key">@t.Value</option>
+            }
+        </InputSelect>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Target Value (green)</label>
+            <InputSelect class="form-select" @bind-Value="EditedQuestion.TargetInt">
+                @foreach (var t in EditedQuestion.Targets)
+                {
+                    <option value="@t.Key">@t.Value</option>
+                }
+            </InputSelect>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Field</label>
+            <InputSelect class="form-select" @bind-Value="EditedQuestion.Field">
+                @foreach (var t in EditedQuestion.Fields)
+                {
+                    <option value="@t.Key">@t.Value</option>
+                }
+            </InputSelect>
+        </div>
+        
+        <div class="mb-3">
+        <ValidationSummary></ValidationSummary>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <button type="submit" class="btn btn-success m-2">Save</button>
+        <button type="button" @onclick="CancelEdit" class="btn btn-warning m-2">Cancel</button>
+        </div>
+    </EditForm>
+}

@@ -1,0 +1,80 @@
+﻿@page "/dailyresultsdepartmentview"
+
+
+
+@if (LevelNavigationObject.SelectedDepartment != null)
+{
+@foreach (var l in _lines)
+{
+    <h5 class="h5 linebackground p-2"> @l.LineName</h5>
+
+
+    <table class="table  table-bordered  align-middle">
+        <thead>
+        <tr>
+            <th style="width:12.5%;" scope="col">Output</th>
+            <th style="width:12.5%;" scope="col">Staffing</th>
+            <th style="width:12.5%;" scope="col">PR %</th>
+            <th style="width:12.5%;" scope="col">UPDT %</th>
+            <th style="width:12.5%;" scope="col">PDT %</th>
+            <th style="width:12.5%;" scope="col">CO %</th>
+            <th style="width:12.5%;" scope="col">Stops</th>
+            <th style="width:12.5%;" scope="col">Waste</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        @foreach (var a in _results.Where(x => x.ProductionLineId == l.Id))
+        {
+            <tr>
+                <td>
+                    @a.TotalOutput
+                </td>
+                <td>
+                    @a.TotalStaffing
+                </td>
+                <td class="@a.TotalPrClass">
+                    @a.TotalPr
+                </td>
+                <td class="@a.TotalUpdtClass">
+                    @a.TotalUpdt
+                </td>
+                <td class="@a.TotalPdtClass">
+                    @a.TotalPdt
+                </td>
+                <td class="@a.TotalCoClass">
+                    @a.TotalCo
+                </td>
+                <td>
+                    @a.TotalStops
+                </td>
+                <td class="@a.TotalWasteClass">
+                    @a.TotalWaste
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <i>Comments - day: </i><b>@a.CommentDay</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <i>Comments - evening: </i><b>@a.CommentEve</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <i>Comments - night: </i><b>@a.CommentNight</b>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+}
+}
+else
+{
+    <h2>Select department and date</h2>
+}

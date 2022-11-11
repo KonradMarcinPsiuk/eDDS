@@ -1,0 +1,164 @@
+﻿@page "/dailyresults"
+
+@if (!IsBusyScoped.IsBusy)
+{
+    if (LevelNavigationObject.SelectedProductionLine == null)
+    {
+        <h2 style="font-style: italic">Select production line and date</h2>
+    }
+    else
+    {
+        if (_dailyResults != null)
+        {
+            <div class="container text-center">
+                <div class="row align-items-start">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Day</h5>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="outputday" value="@_dailyResults.OutputDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.OutputDay = v; await SaveData();} }">
+                                    <label for="outputday">Output</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="staffingday" value="@_dailyResults.StaffingDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.StaffingDay = v; await SaveData();} }">
+                                    <label for="staffingday">Staffing</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="prday" value="@_dailyResults.PrDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.PrDay = v; await SaveData();} }">
+                                    <label for="prday">PR%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="updtday" value="@_dailyResults.UpdtDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.UpdtDay = v; await SaveData();} }">
+                                    <label for="updtday">UPDT%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="pdtday" value="@_dailyResults.PdtDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.PdtDay = v; await SaveData();} }">
+                                    <label for="pdtday">PDT%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="coday" value="@_dailyResults.CoDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.CoDay = v; await SaveData();} }">
+                                    <label for="coday">CO%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="stopsday" value="@_dailyResults.StopsDay" @onchange="async x => { if (int.TryParse(x.Value?.ToString(), out var v)){_dailyResults.StopsDay = v; await SaveData();} }">
+                                    <label for="stopsday">Stops</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="wasteday" value="@_dailyResults.WasteDay" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.WasteDay = v; await SaveData();} }">
+                                    <label for="wasteday">Waste</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" style="min-height: 120px;" id="commentday" value="@_dailyResults.CommentDay" @onchange="async x => { _dailyResults.CommentDay = x.Value?.ToString(); await SaveData();}"></textarea>
+                                    <label for="commentday">Comments</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Evening</h5>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="outputeve" value="@_dailyResults.OutputEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.OutputEve = v; await SaveData();} }">
+                                    <label for="outputeve">Output</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="staffingeve" value="@_dailyResults.StaffingEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.StaffingEve = v; await SaveData();} }">
+                                    <label for="staffingeve">Staffing</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="preve" value="@_dailyResults.PrEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.PrEve = v; await SaveData();} }">
+                                    <label for="preve">PR%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="updteve" value="@_dailyResults.UpdtEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.UpdtEve = v; await SaveData();} }">
+                                    <label for="updteve">UPDT%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="pdteve" value="@_dailyResults.PdtEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.PdtEve = v; await SaveData();} }">
+                                    <label for="pdteve">PDT%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="coeve" value="@_dailyResults.CoEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.CoEve = v; await SaveData();} }">
+                                    <label for="coeve">CO%</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="stopseve" value="@_dailyResults.StopsEve" @onchange="async x => { if (int.TryParse(x.Value?.ToString(), out var v)){_dailyResults.StopsEve = v; await SaveData();} }">
+                                    <label for="stopseve">Stops</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="wasteeve" value="@_dailyResults.WasteEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.WasteEve = v; await SaveData();} }">
+                                    <label for="wasteeve">Waste</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control"  style="min-height: 120px;" id="commenteve" value="@_dailyResults.CommentEve" @onchange="async x => { _dailyResults.CommentEve = x.Value?.ToString(); await SaveData();}"></textarea>
+                                    <label for="commenteve">Comments</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Night</h5>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="outputnight" value="@_dailyResults.OutputNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.OutputNight = v; await SaveData();} }">
+                                    <label for="outputnight">Output</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="staffingnight" value="@_dailyResults.StaffingNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.StaffingNight = v; await SaveData();} }">
+                                    <label for="staffingnight">Staffing</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="prnight" value="@_dailyResults.PrNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.PrNight = v; await SaveData();} }">
+                                    <label for="prnight">PR%</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="updtnight" value="@_dailyResults.UpdtNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.UpdtNight = v; await SaveData();} }">
+                                    <label for="updtnight">UPDT%</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="pdtnight" value="@_dailyResults.PdtNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.PdtNight = v; await SaveData();} }">
+                                    <label for="pdtnight">PDT%</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="conight" value="@_dailyResults.CoNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.CoNight = v; await SaveData();} }">
+                                    <label for="conight">CO%</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="stopsnight" value="@_dailyResults.StopsNight" @onchange="async x => { if (int.TryParse(x.Value?.ToString(), out var v)){_dailyResults.StopsNight = v; await SaveData();} }">
+                                    <label for="stopsnight">Stops</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="wastenight" value="@_dailyResults.WasteNight" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.WasteNight = v; await SaveData();} }">
+                                    <label for="wastenight">Waste</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control"  style="min-height: 120px;" id="commentnight" value="@_dailyResults.CommentNight" @onchange="async x => { _dailyResults.CommentNight = x.Value?.ToString(); await SaveData();}"></textarea>
+                                    <label for="commentnight">Comments</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    <div class="lds-dual-ring"></div>
+}

@@ -1,0 +1,57 @@
+﻿@page "/dailyplanner"
+
+<div class="container">
+    <div class="row align-items-start">
+
+        <div class="col">
+            <label class="form-label" for="year">Year:</label>
+            <select class="form-select" id="year" value="@SelectedYear" @onchange="SelectedYearChanged">
+                @foreach (var y in Years)
+                {
+                    <option value="@y">@y</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label" for="week">Week:</label>
+            <select class="form-select" id="week" value="@SelectedWeek" @onchange="SelectedWeekChanged">
+                @foreach (var w in Weeks)
+                {
+                    <option value="@w">@w</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col">
+            <button class="btn btn-success" @onclick="CreateNewPlan">Create new plan</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Start date</th>
+            <th scope="col">Plan type</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Edit plan</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var plan in Plans)
+        {
+            <tr>
+                <td>@plan.StartDate</td>
+                <td>@plan.DailyPlanTypeDescription</td>
+                <td>@plan.Comment</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => EditPlan(plan.Id)">Edit</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

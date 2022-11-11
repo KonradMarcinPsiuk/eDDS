@@ -1,0 +1,10 @@
+﻿<div>
+<PlantPickerComponent  OnPlantSelected="OnPlantSelectedInternal" SelectedPlant="SelectedPlant"></PlantPickerComponent>
+<ValueStreamPickerComponent CanBeEmpty="true" PlantId="SelectedPlant?.Id" OnValueStreamSelected="OnValueStreamSelectedInternal" SelectedValueStream="SelectedValueStream"></ValueStreamPickerComponent>
+<DepartmentPickerComponent CanBeEmpty="true" OnDepartmentSelected="OnDepartmentSelectedInternal" ValueStreamId="SelectedValueStream?.Id" SelectedDepartment="SelectedDepartment"></DepartmentPickerComponent>
+<ProductionLinePickerComponent DepartmentId="SelectedDepartment?.Id"  CanBeEmpty="true"  OnProductionLineSelected="OnProductionLineSelectedInternal" SelectedProductionLine="SelectedProductionLine" ></ProductionLinePickerComponent>
+<!--
+    <LineAreaPickerComponent CanBeEmpty="true"  OnLineAreaSelected="OnLineAreaSelectedInternal" SelectedLine="SelectedProductionLine?.Id" SelectedLineArea="SelectedLineArea"></LineAreaPickerComponent>
+    -->
+<button class="btn btn-primary" @onclick="CloseModal">Ok</button>
+</div>

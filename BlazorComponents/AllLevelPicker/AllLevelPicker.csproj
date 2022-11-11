@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\DepartmentService\DepartmentService.csproj" />
+    <ProjectReference Include="..\..\Services\LineAreaService\LineAreaService.csproj" />
+    <ProjectReference Include="..\..\Services\PlantService\PlantService.csproj" />
+    <ProjectReference Include="..\..\Services\ProductionLineService\ProductionLineService.csproj" />
+    <ProjectReference Include="..\..\Services\ValueStreamService\ValueStreamService.csproj" />
+    <ProjectReference Include="..\DepartmentPicker\DepartmentPicker.csproj" />
+    
+    <ProjectReference Include="..\LineAreaPicker\LineAreaPicker.csproj" />
+  
+    <ProjectReference Include="..\PlantPicker\PlantPicker.csproj" />
+  
+    <ProjectReference Include="..\ProductionLinePicker\ProductionLinePicker.csproj" />
+    
+    <ProjectReference Include="..\ValueStreamPicker\ValueStreamPicker.csproj" />
+   
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+</Project>

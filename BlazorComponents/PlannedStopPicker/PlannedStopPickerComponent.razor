@@ -1,0 +1,119 @@
+﻿<h3>Planned Stop Picker</h3>
+
+<div class="mb-3">
+    <button class="btn btn-primary" @onclick="() => SelectionChanged(1)">PM Tasks</button>
+    <button class="btn btn-primary" @onclick="() => SelectionChanged(2)">Cil Tasks</button>
+    <button class="btn btn-primary" @onclick="() => SelectionChanged(3)">Cl Tasks</button>
+    <button class="btn btn-primary" @onclick="() => SelectionChanged(4)">Other Tasks</button>
+</div>
+<div style="max-height: 400px; overflow-x: auto;">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th >Description</th>
+            <th >Action</th>
+            <th >Area</th>
+            <th>Select</th>
+        </tr>
+        </thead>
+        <tbody style="height: 100px; overflow: auto;">
+        @if (selectedOption == 1)
+        {
+            foreach (var s in PmTasks)
+            {
+                <tr>
+                    <td>
+                        @s.Description
+                    </td>
+
+                    <td>
+                        @s.Action
+                    </td>
+
+                    <td>
+                        @s.LineArea.AreaName
+                    </td>
+                    <td>
+                        <button class="btn btn-success" @onclick="async () => await SelectTask(s)">Select</button>
+                    </td>
+                </tr>
+            }
+        }
+
+        @if (selectedOption == 2)
+        {
+            foreach (var s in CilTasks)
+            {
+                <tr>
+                    <td>
+                        @s.Description
+                    </td>
+
+                    <td>
+                        @s.Action
+                    </td>
+
+                    <td>
+                        @s.LineArea.AreaName
+                    </td>
+                    <td>
+                        <button class="btn btn-success" @onclick="async () => await SelectTask(s)">Select</button>
+                    </td>
+                </tr>
+            }
+        }
+
+
+        @if (selectedOption == 3)
+        {
+            foreach (var s in ClTasks)
+            {
+                <tr>
+                    <td>
+                        @s.Description
+                    </td>
+
+                    <td>
+                        @s.Action
+                    </td>
+
+                    <td>
+                        @s.LineArea.AreaName
+                    </td>
+                    <td>
+                        <button class="btn btn-success" @onclick="async () => await SelectTask(s)">Select</button>
+                    </td>
+                </tr>
+            }
+        }
+
+        @if (selectedOption == 4)
+        {
+            foreach (var s in OtherTasks)
+            {
+                <tr>
+                    <td>
+                        @s.Description
+                    </td>
+
+                    <td>
+                        @s.Action
+                    </td>
+
+                    <td>
+                        @s.LineArea.AreaName
+                    </td>
+                    <td>
+                        <button class="btn btn-success" @onclick="async () => await SelectTask(s)">Select</button>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+</div>
+
+<div class="mb-3">
+    <button class="btn btn-warning" @onclick="CancelMethod">Cancel</button>
+</div>

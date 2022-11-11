@@ -1,0 +1,280 @@
+﻿@if (EditedPlan != null)
+{
+    <EditForm Model="EditedPlan" OnValidSubmit="SavePlan">
+
+    <div class="container text-left">
+        <div class="row">
+
+            <div class="col">
+                <label class="form-label" for="line">Production Line</label>
+                <InputSelect class="form-select" id="line" @bind-Value="EditedPlan.ProductionLineId">
+                    @foreach (var line in ProductionLines)
+                    {
+                        <option value="@line.Id">@line.LineName</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col">
+                <label class="form-label" for="start">Start date</label>
+                <InputDate class="form-control" id="start" TValue="DateTime" @bind-Value="EditedPlan.StartDateDt"></InputDate>
+            </div>
+            <div class="col">
+                <label class="form-label" for="type">Plan Type</label>
+                <InputSelect class="form-select" id="type" @bind-Value="EditedPlan.DailyPlanTypeId">
+                    @foreach (var o in EditedPlan.PlanTypes)
+                    {
+                        <option value="@o.Key">@o.Value</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="row">
+                <div class="col">
+
+                    <label class="form-label" for="comment">Comment</label>
+
+
+                    <InputTextArea class="form-control" id="comment" @bind-Value="EditedPlan.Comment"></InputTextArea>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <a class="btn btn-secondary" type="button" @onclick="ToggleMenu">
+        Add...
+    </a>
+
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="@_menuCss" id="collapseExample">
+        <div class="p-3">
+            <button type="button" class="btn btn-secondary" @onclick="AddDefect">Add existing defect</button>
+            <button type="button" class="btn btn-secondary" @onclick="AddExistingTask">Add existing planned task</button>
+
+            <button type="button" class="btn btn-secondary" @onclick="AddPmTask">Add new PM task</button>
+            <button type="button" class="btn btn-secondary" @onclick="AddCilTask">Add new CIL task</button>
+            <button type="button" class="btn btn-secondary" @onclick="AddClTask">Add new CL task</button>
+            <button type="button" class="btn btn-secondary" @onclick="AddOtherTask">Add new Other task</button>
+
+
+        </div>
+    </div>
+    <table class="table" style="word-break: break-all">
+
+    <thead>
+    <tr>
+        <th style="min-width: 80px" scope="col">Type</th>
+        <th style="min-width: 80px" class="fit" scope="col">Underl. stat.</th>
+        <th style="max-width: 250px; min-width: 150px" scope="col">Description</th>
+        <th style="max-width: 250px; min-width: 150px" scope="col">Action</th>
+        <th style="min-width: 80px" scope="col">Area</th>
+        <th style="max-width: 250px; min-width: 150px" scope="col">Comment</th>
+        <th style="min-width: 80px" scope="col">Owner</th>
+        <th style="min-width: 80px" scope="col">Start time</th>
+        <th style="min-width: 80px" scope="col" width="100">Duration (min)</th>
+        <th class="fit" scope="col">Compl.</th>
+        <th class="fit" scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var d in EditedPlan.DailyPlanDefectTasks)
+    {
+        <tr class="@rowBackgroudClass(d.IsClosed)">
+            <td class="fit">Defect</td>
+            <td class="@cellBackgroudClass(d.LinkedTask.IsClosed)">@d.LinkedTask.StatusDescription</td>
+            <td style="max-width: 150px;">@d.LinkedTask.Description</td>
+            <td>@d.LinkedTask.Action</td>
+            <td class="fit">@d.LinkedTask.LineArea.AreaName</td>
+            <td>
+                <input class="form-control" @bind="@d.Comment"/>
+            </td>
+            <td class="fit">
+                @if (DepartmentId != null)
+                {
+                    <PersonPicker.PersonPickerComponent LabelVisible=false CanBeEmpty=true DepartmentId=DepartmentId OnPersonSelected="x => d.AssignOwner(x)" SelectedPerson="d.Owner"></PersonPicker.PersonPickerComponent>
+                }
+            </td>
+            <td width="150">
+                <TimePicker.TimePickerObject SelectedTime="d.StartTime" OnTimeSelected="x => d.SetStartTime(x)"></TimePicker.TimePickerObject>
+            </td>
+            <td>
+                <input class="form-control" type="number" @bind="d.Duration">
+            </td>
+            <td>
+
+                <input class="form-check-input big-checkbox" type="checkbox" checked="@d.IsClosed" @onchange="async x => { d.IsClosed = !d.IsClosed; await ChangeUnderlyingTask(d.LinkedTask, x);}">
+
+            </td>
+            <td>
+                <button class="btn btn-danger" type="button" @onclick="async () =>{if (await DeleteTaskCheck()) EditedPlan.DailyPlanDefectTasks.Remove(d);}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in EditedPlan.DailyPlanPmTasks)
+    {
+        <tr class="@rowBackgroudClass(d.IsClosed)">
+            <td class="fit">PM task</td>
+            <td class="@cellBackgroudClass(d.LinkedTask.IsClosed)">@d.LinkedTask.StatusDescription</td>
+            <td>@d.LinkedTask.Description</td>
+            <td>@d.LinkedTask.Action</td>
+            <td class="fit">@d.LinkedTask.LineArea.AreaName</td>
+            <td>
+                <input class="form-control" @bind="@d.Comment"/>
+            </td>
+
+            <td class="fit">
+                @if (DepartmentId != null)
+                {
+                    <PersonPicker.PersonPickerComponent LabelVisible=false CanBeEmpty=true DepartmentId=DepartmentId OnPersonSelected="x => d.AssignOwner(x)" SelectedPerson="d.Owner"></PersonPicker.PersonPickerComponent>
+                }
+            </td>
+            <td width="150">
+                <TimePicker.TimePickerObject SelectedTime="d.StartTime" OnTimeSelected="x => d.SetStartTime(x)"></TimePicker.TimePickerObject>
+            </td>
+            <td>
+                <input class="form-control" type="number" @bind="d.Duration">
+            </td>
+            <td>
+                <input class="form-check-input big-checkbox" type="checkbox" checked="@d.IsClosed" @onchange="async x => { d.IsClosed = !d.IsClosed; await ChangeUnderlyingTask(d.LinkedTask, x);}">
+            </td>
+            <td>
+                            <button class="btn btn-danger" type="button" @onclick="async () =>{if (await DeleteTaskCheck()) EditedPlan.DailyPlanPmTasks.Remove(d);}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in EditedPlan.DailyPlanCilTasks)
+    {
+        <tr class="@rowBackgroudClass(d.IsClosed)">
+            <td class="fit">CIL task</td>
+            <td class="@cellBackgroudClass(d.LinkedTask.IsClosed)">@d.LinkedTask.StatusDescription</td>
+            <td>@d.LinkedTask.Description</td>
+            <td>@d.LinkedTask.Action</td>
+            <td class="fit">@d.LinkedTask.LineArea.AreaName</td>
+            <td>
+                <input class="form-control" @bind="@d.Comment"/>
+            </td>
+
+            <td class="fit">
+                @if (DepartmentId != null)
+                {
+                    <PersonPicker.PersonPickerComponent LabelVisible=false CanBeEmpty=true DepartmentId=DepartmentId OnPersonSelected="x => d.AssignOwner(x)" SelectedPerson="d.Owner"></PersonPicker.PersonPickerComponent>
+                }
+            </td>
+            <td width="150">
+                <TimePicker.TimePickerObject SelectedTime="d.StartTime" OnTimeSelected="x => d.SetStartTime(x)"></TimePicker.TimePickerObject>
+            </td>
+            <td>
+                <input class="form-control" type="number" @bind="d.Duration">
+            </td>
+            <td>
+                <input class="form-check-input big-checkbox" type="checkbox" checked="@d.IsClosed" @onchange="async x => { d.IsClosed = !d.IsClosed; await ChangeUnderlyingTask(d.LinkedTask, x);}">
+            </td>
+            <td>
+                <button class="btn btn-danger" type="button" @onclick="() => EditedPlan.DailyPlanCilTasks.Remove(d)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in EditedPlan.DailyPlanClTasks)
+    {
+        <tr class="@rowBackgroudClass(d.IsClosed)">
+            <td class="fit">CL task</td>
+            <td class="@cellBackgroudClass(d.LinkedTask.IsClosed)">@d.LinkedTask.StatusDescription</td>
+            <td>@d.LinkedTask.Description</td>
+            <td>@d.LinkedTask.Action</td>
+            <td class="fit">@d.LinkedTask.LineArea.AreaName</td>
+            <td>
+                <input class="form-control" @bind="@d.Comment"/>
+            </td>
+
+            <td class="fit">
+                @if (DepartmentId != null)
+                {
+                    <PersonPicker.PersonPickerComponent LabelVisible=false CanBeEmpty=true DepartmentId=DepartmentId OnPersonSelected="x => d.AssignOwner(x)" SelectedPerson="d.Owner"></PersonPicker.PersonPickerComponent>
+                }
+            </td>
+            <td width="150">
+                <TimePicker.TimePickerObject SelectedTime="d.StartTime" OnTimeSelected="x => d.SetStartTime(x)"></TimePicker.TimePickerObject>
+            </td>
+            <td>
+                <input class="form-control" type="number" @bind="d.Duration">
+            </td>
+            <td>
+                <input class="form-check-input big-checkbox" type="checkbox" checked="@d.IsClosed" @onchange="async x => { d.IsClosed = !d.IsClosed; await ChangeUnderlyingTask(d.LinkedTask, x);}">
+            </td>
+            <td>
+                <button class="btn btn-danger" type="button" @onclick="async () =>{if (await DeleteTaskCheck()) EditedPlan.DailyPlanClTasks.Remove(d);}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in EditedPlan.DailyPlanOtherTasks)
+    {
+        <tr class="@rowBackgroudClass(d.IsClosed)">
+            <td class="fit">Other task</td>
+            <td class="@cellBackgroudClass(d.LinkedTask.IsClosed)">@d.LinkedTask.StatusDescription</td>
+            <td>@d.LinkedTask.Description</td>
+            <td>@d.LinkedTask.Action</td>
+            <td class="fit">@d.LinkedTask.LineArea.AreaName</td>
+            <td>
+                <input class="form-control" @bind="@d.Comment"/>
+            </td>
+
+            <td class="fit">
+                @if (DepartmentId != null)
+                {
+                    <PersonPicker.PersonPickerComponent LabelVisible=false CanBeEmpty=true DepartmentId=DepartmentId OnPersonSelected="x => d.AssignOwner(x)" SelectedPerson="d.Owner"></PersonPicker.PersonPickerComponent>
+                }
+            </td>
+            <td width="150">
+                <TimePicker.TimePickerObject SelectedTime="d.StartTime" OnTimeSelected="x => d.SetStartTime(x)"></TimePicker.TimePickerObject>
+            </td>
+            <td>
+                <input class="form-control" type="number" @bind="d.Duration">
+            </td>
+            <td>
+                <input class="form-check-input big-checkbox" type="checkbox" checked="@d.IsClosed" @onchange="async x => { d.IsClosed = !d.IsClosed; await ChangeUnderlyingTask(d.LinkedTask, x);}">
+            </td>
+            <td>
+                            <button class="btn btn-danger" type="button" @onclick="async () =>{if (await DeleteTaskCheck()) EditedPlan.DailyPlanOtherTasks.Remove(d);}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    }
+
+
+    </tbody>
+    </table>
+
+
+    </EditForm>
+}

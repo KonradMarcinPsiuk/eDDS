@@ -1,0 +1,119 @@
+﻿@page "/dailytasks"
+
+<div>
+    <button class="btn btn-primary" @onclick="LogNewPmTask">Log new PM task</button>
+    <button class="btn btn-primary" @onclick="LogNewCilTask">Log new CIL task</button>
+    <button class="btn btn-primary" @onclick="LogNewClTask">Log new CL task</button>
+    <button class="btn btn-primary" @onclick="LogNewOtherTask">Log new Other task</button>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th style="min-width:150px; max-width:300px;" scope="col">Line area:</th>
+        <th style="min-width:150px; max-width:300px;" scope="col">Type:</th>
+        <th style="min-width:150px; max-width:300px;" scope="col">Priority:</th>
+        <th style="min-width:150px; max-width:300px;" scope="col">Open date</th>
+        <th style="min-width:150px; max-width:300px;" scope="col">Description</th>
+        <th style="min-width:150px; max-width:300px;" scope="col">Action</th>
+        @if (!openOnly)
+        {
+            <th style="min-width:150px; max-width:300px;" scope="col">Close date</th>
+        }
+        <th style="min-width:100px; max-width:100px;" scope="col">Edit</th>
+        <th style="min-width:100px; max-width:100px;" scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var d in PmTasks)
+    {
+        <tr>
+
+            <td>@d.LineArea.AreaName</td>
+            <td>PM task</td>
+            <td>@d.PriorityDescription</td>
+            <td>@d.OpenDate.ToString("d")</td>
+            <td>@d.Description</td>
+            <td>@d.Action</td>
+            @if (!openOnly)
+            {
+                <td>@d.CloseDate?.ToString("d")</td>
+            }
+            <td>
+                <button class="btn btn-primary" @onclick="async () => await EditTask(d.Id, TaskType.PmTask)">Edit</button>
+            </td>
+            <td>
+                <DeleteButton OnClick="async () => { if (await DeleteCheck()){ await PlannedStopService.DeletePmTask(d.Id); PmTasks.Remove(d);} }"></DeleteButton>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in CilTasks)
+    {
+        <tr>
+
+            <td>@d.LineArea.AreaName</td>
+            <td>CIL task</td>
+            <td>@d.PriorityDescription</td>
+            <td>@d.OpenDate.ToString("d")</td>
+            <td>@d.Description</td>
+            <td>@d.Action</td>
+            @if (!openOnly)
+            {
+                <td>@d.CloseDate?.ToString("d")</td>
+            }
+            <td>
+                <button class="btn btn-primary" @onclick="async () => await EditTask(d.Id, TaskType.CilTask)">Edit</button>
+            </td>
+            <td>
+                <DeleteButton OnClick="async () => { if (await DeleteCheck()) {await PlannedStopService.DeleteCilTask(d.Id); CilTasks.Remove(d);}}"></DeleteButton>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in ClTasks)
+    {
+        <tr>
+
+            <td>@d.LineArea.AreaName</td>
+            <td>CL task</td>
+            <td>@d.PriorityDescription</td>
+            <td>@d.OpenDate.ToString("d")</td>
+            <td>@d.Description</td>
+            <td>@d.Action</td>
+            @if (!openOnly)
+            {
+                <td>@d.CloseDate?.ToString("d")</td>
+            }
+            <td>
+                <button class="btn btn-primary" @onclick="async () => await EditTask(d.Id, TaskType.ClTask)">Edit</button>
+            </td>
+            <td>
+                <DeleteButton OnClick="async () => { if (await DeleteCheck()) {await PlannedStopService.DeleteClTask(d.Id);ClTasks.Remove(d);} }"></DeleteButton>
+            </td>
+        </tr>
+    }
+
+    @foreach (var d in OtherTasks)
+    {
+        <tr>
+
+            <td>@d.LineArea.AreaName</td>
+            <td>Other task</td>
+            <td>@d.PriorityDescription</td>
+            <td>@d.OpenDate.ToString("d")</td>
+            <td>@d.Description</td>
+            <td>@d.Action</td>
+            @if (!openOnly)
+            {
+                <td>@d.CloseDate?.ToString("d")</td>
+            }
+            <td>
+                <button class="btn btn-primary" @onclick="async () => await EditTask(d.Id, TaskType.OtherTask)">Edit</button>
+            </td>
+            <td>
+                <DeleteButton OnClick="async () => { if (await DeleteCheck()) {await PlannedStopService.DeleteOtherTask(d.Id);OtherTasks.Remove(d);} }"></DeleteButton>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

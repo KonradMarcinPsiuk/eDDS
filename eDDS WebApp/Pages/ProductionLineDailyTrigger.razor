@@ -1,0 +1,57 @@
+﻿@page "/dailytriggermanager"
+
+<button type="button" class="btn btn-primary" @onclick="LogNewQuestion">Add new question</button>
+
+<table class="table table-striped align-middle table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">Question</th>
+        <!--     <th scope="col">Hint</th> -->
+        <th scope="col">Field</th>
+        <th scope="col">Type</th>
+        <th scope="col">Target</th>
+        <th scope="col">Add selected line</th>
+        <th scope="col">Edit question</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var q in _questions)
+    {
+        <tr>
+            <th style="min-width: 150px; max-width: 300px;" scope="row">@q.Question</th>
+            <!--      <td>@q.Hint</td> -->
+            <td>@q.FieldDescription</td>
+            <td>@q.TypeDescription</td>
+            <td>@q.TargetDescription</td>
+            <td>
+                <button type="button" class="btn btn-primary" @onclick="async () => await AddNewLine(q)">Add</button>
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-warning" @onclick="async () => await EditQuestion(q.Id)">Edit</button>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="7">
+                <div class="d-flex flex-row m-3">
+
+
+                    @foreach (var l in q.ProductionLineDailyTriggerQuestions)
+                    {
+                        <div class="chip">
+                            <button type="button" class="btn btn-danger" @onclick="() => DeleteLineLink(l, q.Id)">
+
+                                <i class="bi bi-trash"></i>
+                            </button>
+                            @l.ProductionLine.LineName
+                        </div>
+                    }
+
+                </div>
+            </td>
+        </tr>
+    }
+
+    </tbody>
+</table>

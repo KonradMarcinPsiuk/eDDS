@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\DailyPlanService\DailyPlanService.csproj" />
+    <ProjectReference Include="..\..\Services\ProductionLineService\ProductionLineService.csproj" />
+    <ProjectReference Include="..\CilTaskEditor\CilTaskEditor.csproj" />
+    <ProjectReference Include="..\ClTaskEditor\ClTaskEditor.csproj" />
+
+    <ProjectReference Include="..\DefectPicker\DefectPicker.csproj" />
+    <ProjectReference Include="..\OtherTaskEditor\OtherTaskEditor.csproj" />
+    <ProjectReference Include="..\..\Services\PeopleService\PeopleService.csproj" />
+    <ProjectReference Include="..\PersonPicker\PersonPicker.csproj" />
+    <ProjectReference Include="..\PlannedStopPicker\PlannedStopPicker.csproj" />
+    <ProjectReference Include="..\PmTaskEditor\PmTaskEditor.csproj" />
+  
+    <ProjectReference Include="..\TimePicker\TimePicker.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,97 @@
+﻿@if (EditedDefect is not null)
+{
+    <EditForm Model="@EditedDefect" class="defect_editor" OnValidSubmit="SaveEdit">
+
+
+        <div class="mb-3">
+            <LineAreaPickerComponent SelectedLine="SelectedLine" CanBeEmpty="true" SelectedLineArea="EditedDefect.LineArea" OnLineAreaSelected="SelectLineArea"></LineAreaPickerComponent>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="desc">Description:</label>
+            <InputTextArea class="form-control" id="desc" @bind-Value="EditedDefect.Description"></InputTextArea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="action">Action:</label>
+            <InputTextArea class="form-control" id="action" @bind-Value="EditedDefect.Action"></InputTextArea>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+
+                    <div class="mb-3">
+                        <label class="form-label" for="author">Author:</label>
+                        <PersonPicker.PersonPickerComponent CanBeEmpty="true" IsBusy="PeoplePickerBusy" LabelVisible=false SelectedPerson="Owner" DepartmentId="(int) DepartmentId" OnPersonSelected="x => EditedDefect.AssignOwner(x)"></PersonPicker.PersonPickerComponent>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label class="form-label" for="type">Type:</label>
+                        <InputSelect id="type" @bind-Value="EditedDefect.SubTypeId" class="form-select min-size">
+                            @foreach (var t in EditedDefect.SubTypes)
+                            {
+                                <option value="@t.Key">@t.Value</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label class="form-label" for="prior">Priority:</label>
+                        <InputSelect id="prior" @bind-Value="EditedDefect.Priority" class="form-select min-size">
+                            @foreach (var p in EditedDefect.Priorities)
+                            {
+                                <option value="@p.Key">@p.Value</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label class="form-label" for="stat">Status:</label>
+                        <InputSelect id="stat" ValueExpression="@(() => EditedDefect.Status)" Value="EditedDefect.Status" ValueChanged="@((int value) => StatusChanged(value, EditedDefect))" class="form-select min-size">
+                            @foreach (var s in EditedDefect.Statuses)
+                            {
+                                <option value="@s.Key">@s.Value</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label class="form-label" for="cil">Found during CIL</label>
+                        <InputCheckbox id="cil" @bind-Value="EditedDefect.FoundDuringCil" class="form-check-inline"></InputCheckbox>
+                    </div>
+                </div>
+                <div class="col">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="pm">PM help needed</label>
+                        <InputCheckbox id="pm" @bind-Value="EditedDefect.PmHelpNeeded" class="form-check-inline"></InputCheckbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="pmhelp">Pm help:</label>
+            <InputTextArea class="form-control min-size" id="pmhelp" @bind-Value="EditedDefect.PmHelpText"></InputTextArea>
+
+
+        </div>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <button type="submit" class="btn btn-success m-2">Save</button>
+        <button type="button" @onclick="CancelEdit" class="btn btn-warning m-2">Cancel</button>
+    </EditForm>
+}

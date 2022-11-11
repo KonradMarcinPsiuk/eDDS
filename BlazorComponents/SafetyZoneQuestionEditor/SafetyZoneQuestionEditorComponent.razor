@@ -1,0 +1,8 @@
+﻿<EditForm Model="_question" OnValidSubmit="SaveQuestion">
+    <label class="form-label" for="question"></label>
+    <InputText id="question" @bind-Value="_question.Question"></InputText>
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <button type="submit"  class="btn btn-success">Save</button>
+    <button type="button"  class="btn btn-warning" @onclick="CancelMethod">Cancel</button>
+</EditForm>
