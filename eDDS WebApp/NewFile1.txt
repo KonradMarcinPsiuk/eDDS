@@ -1,0 +1,13 @@
+  /*
+  "ConnectionStrings": {
+    "PlantModel": "http://localhost:5055/",
+    "People": "http://localhost:5128",
+    "Defects": "http://localhost:5260",
+    "DailyPlanner": "http://localhost:5243",
+    "PlannedStop": "http://localhost:5246",
+    "DailyTrigger": "http://localhost:5224",
+    "DailyResults": "http://localhost:5011",
+    "ZoneTrigger" : "http://localhost:5250"
+
+  },
+*/

@@ -16,10 +16,4 @@
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="People.Queries">
-      <HintPath>..\..\MapaexNewbridgeMicroservices\People.Queries\bin\Debug\net6.0\People.Queries.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

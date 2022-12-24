@@ -22,4 +22,9 @@ public class Queries
     {
         return $"People/DeletePerson/{personId}";
     }
+
+    public static string GetPerson(int personId)
+    {
+        return $"People/GetPerson/{personId}";
+    }
 }

@@ -20,8 +20,6 @@ namespace DataLayer.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(
-                    "Server=MPXNWBLTVS2035\\SQLEXPRESS;Database=eddsMapaex;Trusted_Connection=True");
             }
         }
 

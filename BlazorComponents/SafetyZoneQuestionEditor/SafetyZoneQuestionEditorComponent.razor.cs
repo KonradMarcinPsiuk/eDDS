@@ -2,13 +2,14 @@
 using Blazored.Modal.Services;
 using DTOs;
 using Microsoft.AspNetCore.Components;
+using ZoneTriggerService;
 
 namespace SafetyZoneQuestionEditor
 {
     public partial class SafetyZoneQuestionEditorComponent
     {
         private SafetyZoneTriggerQuestionDto? _question;
-        [Inject] private ZoneTriggerService.SafetyService _safetyService { get; set; }
+        [Inject] private ISafetyService _safetyService { get; set; }
         [Parameter] public int? QuestionId { get; set; }
         [CascadingParameter] public BlazoredModalInstance ModalInstance { get; set; } = null!;
 

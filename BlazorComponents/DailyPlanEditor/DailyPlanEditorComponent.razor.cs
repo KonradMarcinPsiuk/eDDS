@@ -51,7 +51,7 @@ namespace DailyPlanEditor
             IsBusy = true;
             if (DepartmentId != null)
                 ProductionLines.AddRange(await ProductionLineService.GetProductionLinesForDepartment((int)DepartmentId));
-            if (DailyPlanId != 0)
+            if (DailyPlanId!=null && DailyPlanId != 0)
                 EditedPlan = await DailyPlanService.GetDailyPlan((int)DailyPlanId);
             else
             {

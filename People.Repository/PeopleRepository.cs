@@ -83,4 +83,12 @@ public class PeopleRepository
         }
 
     }
+
+    public async Task<Person> GetPerson(int id)
+    {
+        return await _context.People
+            .AsNoTracking()
+            .Include(x=>x.Departments)
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
 }

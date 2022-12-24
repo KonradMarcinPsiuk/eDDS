@@ -12,11 +12,14 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazored.Modal" Version="6.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.5" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Interfaces\Interfaces.csproj" />
+      <ProjectReference Include="..\..\Services\DTOs\DTOs.csproj" />
+      <ProjectReference Include="..\..\Services\PeopleService\PeopleService.csproj" />
       <ProjectReference Include="..\ModalBaseLibrary\ModalBaseLibrary.csproj" />
     </ItemGroup>
 

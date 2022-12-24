@@ -47,4 +47,12 @@ public class PeopleController:ControllerBase
         await _peopleRepository.DeletePerson(personId);
         return NoContent();
     }
+
+    [HttpGet]
+    [Route("People/GetPerson/{personId}")]
+    public async Task<ActionResult> GetPerson(int personId)
+    {
+        var person = await _peopleRepository.GetPerson(personId);
+        return Ok(person);
+    }
 }

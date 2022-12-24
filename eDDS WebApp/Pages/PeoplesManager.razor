@@ -1,5 +1,46 @@
-﻿<h3>PeoplesManager</h3>
+﻿@page "/peoplesmanager"
 
-@code {
-    
-}
+ <button class="btn btn-primary" @onclick="NewPerson">Create New Person account</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Is real person</th>
+        <th scope="col">Email address</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in people)
+    {
+        <tr>
+            <td >@p.Id.ToString()</td>
+            <td>@p.LastName</td>
+            <td>@p.FirstName</td>
+            <td>@p.IsRealPerson.ToString()</td>
+            <td>@p.EmailAddress</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                           <div class="d-flex flex-row m-3">
+           
+           
+                               @foreach (var d in p.Departments)
+                               {
+                                   <div class="chip">
+                                       <button type="button" class="btn btn-danger" @onclick="() => DeleteDepartment(d.Id, p.Id)">
+           
+                                           <i class="bi bi-trash"></i>
+                                       </button>
+                                       @d.DepartmentName
+                                   </div>
+                               }
+           
+                           </div>
+                       </td>
+        </tr>
+    }
+   
+    </tbody>
+</table>

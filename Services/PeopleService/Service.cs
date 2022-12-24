@@ -12,6 +12,7 @@ namespace PeopleService
         Task<IEnumerable<PersonDto>> GetPeopleForPlant(int plantId);
         Task<bool> SavePerson(PersonDto person);
         Task<bool> DeletePerson(int id);
+        Task<PersonDto> GetPerson(int id);
     }
 
     public class Service : IPeopleService
@@ -48,6 +49,12 @@ namespace PeopleService
         {
             var result =await _httpClient.DeleteAsync(Queries.DeletePerson(id));
             return result.IsSuccessStatusCode;
+        }
+
+        public async Task<PersonDto> GetPerson(int id)
+        {
+            var person = await _httpClient.GetFromJsonAsync<PersonDto>(Queries.GetPerson(id));
+            return person;
         }
     }
 }

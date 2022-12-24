@@ -15,7 +15,7 @@ public partial class ZoneTriggerManager
 
     private readonly List<SafetyZoneTriggerQuestionDto> _safetyQuestions = new();
 
-    [Inject] private SafetyService _zoneSafetyTriggerService { get; set; }
+    [Inject] private ISafetyService _zoneSafetyTriggerService { get; set; }
 
     // [Inject] private ZoneTriggerService.QualityService _zoneQualityTriggerService { get; set; }
     [Inject] private LevelNavigationObject LevelNavigationObject { get; set; } = null!;

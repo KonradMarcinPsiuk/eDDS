@@ -24,6 +24,8 @@
 
         <ProjectReference Include="..\BlazorComponents\LineAreaPicker\LineAreaPicker.csproj" />
 
+        <ProjectReference Include="..\BlazorComponents\PersonEditorModal\PersonEditorModal.csproj" />
+
         <ProjectReference Include="..\BlazorComponents\PlantPicker\PlantPicker.csproj" />
 
         <ProjectReference Include="..\BlazorComponents\ProductionLinePicker\ProductionLinePicker.csproj" />

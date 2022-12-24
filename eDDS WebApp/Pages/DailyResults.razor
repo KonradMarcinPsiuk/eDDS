@@ -67,7 +67,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">Evening</h5>
                                 <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" id="outputeve" value="@_dailyResults.OutputEve" @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.OutputEve = v; await SaveData();} }">
+                                    <input type="number" class="form-control" id="outputeve" 
+                                           value="@_dailyResults.OutputEve" 
+                                           @onchange="async x => { if (decimal.TryParse(x.Value?.ToString(), out var v)){_dailyResults.OutputEve = v; await SaveData();} }">
                                     <label for="outputeve">Output</label>
                                 </div>
                                 <div class="form-floating mb-3">

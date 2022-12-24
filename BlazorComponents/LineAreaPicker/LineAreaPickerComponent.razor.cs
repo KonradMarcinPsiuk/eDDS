@@ -1,5 +1,5 @@
 ﻿using DTOs;
-
+using LineAreaService;
 using Microsoft.AspNetCore.Components;
 
 namespace LineAreaPicker;
@@ -7,7 +7,7 @@ namespace LineAreaPicker;
 public partial class LineAreaPickerComponent
 {
     //Services
-    [Inject] public LineAreaService.Service LineAreaService { get; set; } = null!;
+    [Inject] public ILineAreaService LineAreaService { get; set; } = null!;
 
     [Parameter] public bool CanBeEmpty { get; set; } = false;
     [Parameter]

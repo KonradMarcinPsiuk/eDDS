@@ -1,77 +1,26 @@
 ﻿@namespace PersonEditorModal
-
-@inherits ModalBaseClass
-
-    <div class="modal fade @(ModalRender ? " d-block " : " d-none ") @(Fade ? "show" : " ")"
-         id="person"
-         data-bs-backdrop="static"
-         style="background-color: rgba(10, 10, 10, .4)"
-         data-bs-keyboard="false"
-         tabindex="-1"
-         aria-labelledby="staticBackdropLabel"
-         aria-modal="true">
-        <div class="modal-dialog modal-lg  ">
-            <div class="modal-content">
-                <div class="m-2">
-                @if (ModalRender && EditedPerson != null)
+@if (Person != null)
                 {
-                    <EditForm Model="_editedPerson" OnValidSubmit="CloseModal">
+                    <EditForm Model="Person" OnValidSubmit="CloseModal">
                         <label class="form-label" for="fn">First name:</label> <br/>
-                        <InputText class="form-control" id="fn" @bind-Value="_editedPerson.FirstName"></InputText>
+                        <InputText class="form-control" id="fn" @bind-Value="Person.FirstName"></InputText>
 
                         <label class="form-label" for="ln">Last name:</label> <br/>
-                        <InputText class="form-control" id="ln" @bind-Value="_editedPerson.LastName"></InputText>
+                        <InputText class="form-control" id="ln" @bind-Value="Person.LastName"></InputText>
 
                         <label class="form-label" for="em">Email address:</label> <br/>
-                        <InputText class="form-control" id="em" @bind-Value="_editedPerson.EmailAddress"></InputText>
+                        <InputText class="form-control" id="em" @bind-Value="Person.EmailAddress"></InputText>
 
                      
-                        <InputCheckbox class="form-check" id="rp" @bind-Value="_editedPerson.IsRealPerson"></InputCheckbox>
+                        <InputCheckbox class="form-check" id="rp" @bind-Value="Person.IsRealPerson"></InputCheckbox>
                         <label class="form-check-label" for="rp">Is real person:</label>
 
-                        <label class="form-label" for="depts">Assigned Departments:</label>
-                        <ul class="list-group" id="depts">
-                            @foreach (var d in _editedPerson.Departments)
-                            {
-                                <li class="list-group-item">
-                                    <div class="deptList">
-                                        <div class="item">
-                                            @d.DepartmentName
-                                        </div>
-                                        <div class="item">
-                                            <button type="button" class="btn btn-danger" @onclick="()=>DeleteDept(d.Id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                                </svg>
-                                            </button>
-                                            </div>
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                        <br/>
 
-                        <label class="form-label" for="sel">Select Department to assign:</label>
-                        <br>
-                        
-                        <select id="sel" class="form-select" TValue="int?" value="@SelectedDepartmentHandler" @onchange="SetDepartment">
-                            <option value="">---</option>
-                            @foreach (var d in FilteredDepartments)
-                            {
-                                <option value="@d.Id">@d.DepartmentName</option>
-                            }
-                        </select>
-                        <br/>
-                        <button class="btn btn-success m-2" type="button" @onclick="AddDept">Add selected department</button>
                         <button class="btn btn-success m-2" type="submit">Save</button>
                         <button class="btn btn-success m-2" type="button" @onclick="CancelMethod" >Cancel</button>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                         <ValidationSummary></ValidationSummary>
                     </EditForm>
                 }
-                </div>
-            </div>
-        </div>
-    </div>
+    
 

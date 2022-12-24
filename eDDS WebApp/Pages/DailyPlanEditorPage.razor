@@ -1,4 +1,5 @@
 ﻿@page "/dailyplaneditor"
+@page "/dailyplaneditor/{planId}"
 
 @if (_loading)
 {
@@ -8,7 +9,7 @@ else
     <DailyPlanEditorComponent
         DepartmentId="@LevelNavigationObject?.SelectedDepartment?.Id"
         ProductionLineId="@LevelNavigationObject?.SelectedProductionLine?.Id"
-        DailyPlanId="planId"
+        DailyPlanId="_planId"
         PlanSaved="NavigateToPlansList">
     </DailyPlanEditorComponent>
 }

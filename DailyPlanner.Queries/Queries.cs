@@ -23,7 +23,6 @@ public static class Queries
     }
 
     public static string DeletePlan(int planId)
-
     {
         return $"DailyPlanner/DeletePlan/{planId}";
     }

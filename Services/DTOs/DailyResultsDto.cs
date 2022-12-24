@@ -16,12 +16,12 @@ public class DailyResultsDto
     public decimal? StaffingEve { get; set; }
     public decimal? StaffingNight { get; set; }
     [JsonIgnore]
-    public decimal? TotalStaffing => StaffingDay + StaffingEve + StaffingNight;
+    public decimal? TotalStaffing => (StaffingDay ?? 0) + (StaffingEve ?? 0) + (StaffingNight ?? 0);
     public decimal? PrDay { get; set; }
     public decimal? PrEve { get; set; }
     public decimal? PrNight { get; set; }
     [JsonIgnore]
-    public string? TotalPr => WeighedResultCalculationToString(PrDay, PrEve, PrNight,true);
+    public string? TotalPr => WeighedResultCalculationToString((PrDay ?? 0), (PrEve ??0 ), (PrNight?? 0),true);
     [JsonIgnore]
     public string TotalPrClass
     {
@@ -37,13 +37,13 @@ public class DailyResultsDto
     public decimal? UpdtEve { get; set; }
     public decimal? UpdtNight { get; set; }
     [JsonIgnore]
-    public string? TotalUpdt => WeighedResultCalculationToString(UpdtDay, UpdtEve, UpdtNight,true);
+    public string? TotalUpdt => WeighedResultCalculationToString(UpdtDay ?? 0, UpdtEve??0, UpdtNight ??0,true);
     [JsonIgnore]
     public string TotalUpdtClass
     {
         get
         {
-            var v= WeighedResultCalculation(UpdtDay, UpdtEve, UpdtNight);
+            var v= WeighedResultCalculation(UpdtDay??0, UpdtEve??0, UpdtNight??0);
             if (v == null || ProductionLine.TargetUpdt==null) return "";
             return v > ProductionLine.TargetUpdt ? "negative" : "positive";
         }
@@ -52,13 +52,13 @@ public class DailyResultsDto
     public decimal? PdtEve { get; set; }
     public decimal? PdtNight { get; set; }
     [JsonIgnore]
-    public string? TotalPdt => WeighedResultCalculationToString(PdtDay, PdtEve, PdtNight,true);
+    public string? TotalPdt => WeighedResultCalculationToString(PdtDay??0, PdtEve??0, PdtNight??0,true);
     [JsonIgnore]
     public string TotalPdtClass
     {
         get
         {
-            var v= WeighedResultCalculation(PdtDay, PdtEve, PdtNight);
+            var v= WeighedResultCalculation(PdtDay??0, PdtEve??0, PdtNight??0);
             if (v == null || ProductionLine.TargetPdt==null) return "";
             return v > ProductionLine.TargetPdt ? "negative" : "positive";
         }
@@ -67,13 +67,13 @@ public class DailyResultsDto
     public decimal? CoEve { get; set; }
     public decimal? CoNight { get; set; }
     [JsonIgnore]
-    public string? TotalCo => WeighedResultCalculationToString(CoDay, CoEve, CoNight,true);
+    public string? TotalCo => WeighedResultCalculationToString(CoDay??0, CoEve??0, CoNight??0,true);
     [JsonIgnore]
     public string TotalCoClass
     {
         get
         {
-            var v= WeighedResultCalculation(CoDay, CoEve, CoNight);
+            var v= WeighedResultCalculation(CoDay??0, CoEve??0, CoNight??0);
             if (v == null || ProductionLine.TargetCo==null) return "";
             return v > ProductionLine.TargetCo ? "negative" : "positive";
         }
@@ -121,9 +121,15 @@ public class DailyResultsDto
     {
         if (TotalStaffing != null)
         {
-            var weighedDay = day * (StaffingDay / TotalStaffing);
-            var weighedEve = eve * (StaffingEve / TotalStaffing);
-            var weighedNight = night * (StaffingNight / TotalStaffing);
+            var sDay = StaffingDay ?? 0;
+            var sEve = StaffingEve ?? 0;
+            var sNight = StaffingNight ?? 0;
+            var wDay = sDay>0 ? sDay / TotalStaffing : 0;
+            var wEve = sEve > 0 ? sEve / TotalStaffing : 0;
+            var wNight = sNight>0 ? sNight/TotalStaffing : 0;
+            var weighedDay = day * wDay;
+            var weighedEve = eve * wEve;
+            var weighedNight = night * wNight;
             var sum = weighedDay + weighedEve + weighedNight;
             if (sum == null) return null;
             return Math.Round((decimal) sum, 2);

@@ -1,5 +1,6 @@
 using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using TechnicalAssessment.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<NewbridgeContext>(opt => opt.UseSqlServer(builder.
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<TechnicalAssessmentRepository>();
 
 var app = builder.Build();
 
